@@ -1,4 +1,4 @@
-import { LOADED } from '../actions';
+
 
 const initState = {
     data: []

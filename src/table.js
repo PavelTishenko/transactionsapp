@@ -1,10 +1,9 @@
 import React from 'react'
 import * as ReactBootstrap from 'react-bootstrap';
 import { connect } from 'react-redux';
-import { dataLOADED, lData, LOADED } from './redux/actions';
 
 const Table = ({ data }) => {
-    // vizualization all rows from data
+    // visualization all rows from data
     const renderData = data.map((elt) => {
         const row = elt.split(',');
         const id = row[0];
