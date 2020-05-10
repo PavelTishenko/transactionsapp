@@ -3,7 +3,7 @@ import { useDispatch, connect } from 'react-redux';
 import { lData } from '../../redux/actions';
 import ToolkitProvider, { CSVExport } from 'react-bootstrap-table2-toolkit';
 import BootstrapTable from 'react-bootstrap-table-next';
-
+import paginationFactory from 'react-bootstrap-table2-paginator';
 import './input-component.css';
 
 const Input = ({ data }) => {
@@ -24,6 +24,15 @@ const Input = ({ data }) => {
             })   
    }) 
 
+   const expandRow = {
+       renderer: row => (
+           <div>
+               <button>Edit</button>
+               <button>Delete</button>
+           </div>
+       ),
+       showExpandColumn: false
+   }
    
    const columns=[
     {
@@ -63,7 +72,7 @@ const Input = ({ data }) => {
                     <div>
                         <ExportCSVButton  {...props.csvProps}>Export</ExportCSVButton>
                         <hr />
-                        <BootstrapTable {...props.baseProps} />
+                        <BootstrapTable striped bordered hover expandRow={expandRow} pagination={ paginationFactory() }  {...props.baseProps} />
                     </div>
                 )
             }
