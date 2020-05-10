@@ -1,0 +1,13 @@
+.select-container {
+    display: flex;
+    flex-direction: row;
+    padding-left: 50px;
+}
+
+.select-one{
+    padding-right: 10px;
+}
+
+select{
+    width: 120px;
+}
