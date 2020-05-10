@@ -12,7 +12,6 @@ const Table = ({ data }) => {
         const type = row[2];
         const clientName = row[3];
         const amount = row[4];
-        console.log(id, status, type, clientName, amount);
         return (
             <tr key={id}>
                 <td>{id}</td>
@@ -49,10 +48,11 @@ const Table = ({ data }) => {
     )
 };
 
+// from redux state to component props
 const mapStateToProps = (state) => {
     return {
         data: state.data
     }
 }
-
+// connect - is to connect component with redux 
 export default connect(mapStateToProps)(Table);
