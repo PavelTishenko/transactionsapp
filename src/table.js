@@ -27,7 +27,7 @@ const Table = ({ data }) => {
                 </td>
             </tr>
         )
-    })
+    });
 
     return (
         <ReactBootstrap.Table striped bordered hover>
@@ -53,6 +53,6 @@ const mapStateToProps = (state) => {
     return {
         data: state.data
     }
-}
+};
 // connect - is to connect component with redux 
 export default connect(mapStateToProps)(Table);

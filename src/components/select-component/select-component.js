@@ -21,6 +21,6 @@ const Select = () => {
             </form>
         </div>
     )
-}
+};
 
 export default Select;

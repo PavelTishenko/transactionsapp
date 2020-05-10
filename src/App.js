@@ -13,7 +13,7 @@ const App = () => {
 
   const dispatch = useDispatch();
   const  onLoad =  (data, fileInfo) => {
-    dispatch(lData()) 
+    dispatch(lData());
   }; 
 
   return (
@@ -25,6 +25,6 @@ const App = () => {
       <Table />
     </div>
   );
-}
+};
 
 export default App;
