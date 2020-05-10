@@ -12,49 +12,54 @@ const Input = ({ data }) => {
     const onLoad = (data, fileInfo) => {
         dispatch(lData());
     };
-   const products = [];
-   data.forEach(el=>{
-      const dataArr = el.split(',');
+    const products = [];
+    data.forEach(el => {
+        const dataArr = el.split(',');
         products.push({
             TransactionId: dataArr[0],
             Status: dataArr[1],
             Type: dataArr[2],
             Clientname: dataArr[3],
             Amount: dataArr[4]
-            })   
-   }) 
+        })
+    })
 
-   const expandRow = {
-       renderer: row => (
-           <div>
-               <button>Edit</button>
-               <button>Delete</button>
-           </div>
-       ),
-       showExpandColumn: false
-   }
-   
-   const columns=[
-    {
-        dataField:'TransactionId',
-        text:'id'
-    },
-    {
-        dataField:'Status',
-        text: 'Status' 
-    },
-    {
-        dataField:'Type',
-        text: 'Type'
-    },
-    {
-        dataField:'Clientname',
-        text: 'Client name'
-    },
-    {
-        dataField:'Amount',
-        text: 'Amount'
-    }];
+
+    const rankFormatter = () => {
+        return(
+            <div>
+                <button>Edit</button>
+                <button>Delete</button>
+            </div>
+        )
+    }
+
+    const columns = [
+        {
+            dataField: 'TransactionId',
+            text: 'id'
+        },
+        {
+            dataField: 'Status',
+            text: 'Status'
+        },
+        {
+            dataField: 'Type',
+            text: 'Type'
+        },
+        {
+            dataField: 'Clientname',
+            text: 'Client name'
+        },
+        {
+            dataField: 'Amount',
+            text: 'Amount'
+        },
+        {
+            dataField: 'Action',
+            text: 'Action',
+            formatter: rankFormatter
+        }];
     return (
         <div className="input-container">
             <label>
@@ -63,19 +68,19 @@ const Input = ({ data }) => {
             </label>
             <ToolkitProvider
                 keyField="id"
-                data={ products }
-                columns={ columns }
+                data={products}
+                columns={columns}
                 exportCSV
             >
-            {
-                props => (
-                    <div>
-                        <ExportCSVButton  {...props.csvProps}>Export</ExportCSVButton>
-                        <hr />
-                        <BootstrapTable striped bordered hover expandRow={expandRow} pagination={ paginationFactory() }  {...props.baseProps} />
-                    </div>
-                )
-            }
+                {
+                    props => (
+                        <div>
+                            <ExportCSVButton  {...props.csvProps}>Export</ExportCSVButton>
+                            <hr />
+                            <BootstrapTable striped bordered hover  pagination={paginationFactory()}  {...props.baseProps} />
+                        </div>
+                    )
+                }
             </ToolkitProvider>
         </div >
     )
