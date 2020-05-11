@@ -12,6 +12,13 @@
   position: absolute;
   z-index: -1;
 }
+
+input#file.custom-file-input{
+    position: absolute;
+    top: 0px;
+    left: 10px;
+    cursor: pointer;  
+}
   
 label{
   position: absolute;
@@ -31,4 +38,10 @@ label{
 .btn-export{
   border: 2px solid black;
   height: 35px;
+  
+}
+
+.filterType-classname{
+  position: absolute;
+  right: 200px;
 }

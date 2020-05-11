@@ -4,6 +4,7 @@ import { lData } from '../../redux/actions';
 import ToolkitProvider, { CSVExport, ColumnToggle } from 'react-bootstrap-table2-toolkit';
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory from 'react-bootstrap-table2-paginator';
+import filterFactory, { selectFilter } from 'react-bootstrap-table2-filter';
 import './input-component.css';
 
 const Input = ({ data }) => {
@@ -35,6 +36,17 @@ const Input = ({ data }) => {
         )
     }
 
+    const selectOptions = {
+        0: 'good',
+        1: 'Bad',
+        2: 'unknown'
+    };
+
+    const selectOpt = {
+        0: 'Withdrawal',
+        1: 'Refill'
+    };
+
     const columns = [
         {
             dataField: 'TransactionId',
@@ -42,11 +54,19 @@ const Input = ({ data }) => {
         },
         {
             dataField: 'Status',
-            text: 'Status'
+            text: 'Status',
+            // filter: selectFilter({
+            //     options: selectOptions,
+            //     className: 'filter-classname'
+            //   })
         },
         {
             dataField: 'Type',
-            text: 'Type'
+            text: 'Type',
+            filter: selectFilter({
+                options: selectOpt,
+                className: 'filterType-classname'
+              })
         },
         {
             dataField: 'Clientname',
@@ -73,14 +93,14 @@ const Input = ({ data }) => {
             );
           };
 
+        
+
     return (
         <div className="input-container">
-            <div>
-                <label>
-                    <span className="import-span">Import</span>
-                    <input id='file' type="file" onChange={onLoad} className="custom-file-input" />
-                </label>
-            </div>
+            <label>
+                <span className="import-span">Import</span>
+                <input id='file' type="file" onChange={onLoad} className="custom-file-input" />
+            </label>
             <ToolkitProvider
                 keyField="id"
                 data={products}
@@ -92,7 +112,7 @@ const Input = ({ data }) => {
                         <div>
                             <MyExportCSV  {...props.csvProps}>Export</MyExportCSV>
                             <hr />
-                            <BootstrapTable striped bordered hover pagination={paginationFactory()} {...props.baseProps} />
+                            <BootstrapTable striped bordered hover pagination={paginationFactory()} filter={ filterFactory() } {...props.baseProps} />
                         </div>
                     )
                 }
