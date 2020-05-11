@@ -1,12 +1,13 @@
 import React from 'react';
 import { useDispatch, connect } from 'react-redux';
 import { lData } from '../../redux/actions';
-import ToolkitProvider, { CSVExport } from 'react-bootstrap-table2-toolkit';
+import ToolkitProvider, { CSVExport, ColumnToggle } from 'react-bootstrap-table2-toolkit';
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory from 'react-bootstrap-table2-paginator';
 import './input-component.css';
 
 const Input = ({ data }) => {
+    const { ToggleList } = ColumnToggle;
     const { ExportCSVButton } = CSVExport;
     const dispatch = useDispatch();
     const onLoad = (data, fileInfo) => {
@@ -24,12 +25,12 @@ const Input = ({ data }) => {
         })
     })
 
-
+    
     const rankFormatter = () => {
         return(
             <div>
-                <button>Edit</button>
-                <button>Delete</button>
+                <button className="btn btn-primary">Edit</button>
+                <button className="btn btn-danger">Delete</button>
             </div>
         )
     }
@@ -60,12 +61,26 @@ const Input = ({ data }) => {
             text: 'Action',
             formatter: rankFormatter
         }];
+
+        const MyExportCSV = (props) => {
+            const handleClick = () => {
+              props.onExport();
+            };
+            return (
+              <div>
+                <button className="btn-export" onClick={ handleClick }>Export to CSV</button>
+              </div>
+            );
+          };
+
     return (
         <div className="input-container">
-            <label>
-                Import
-                <input id='file' type="file" onChange={onLoad} className="custom-file-input" />
-            </label>
+            <div>
+                <label>
+                    <span className="import-span">Import</span>
+                    <input id='file' type="file" onChange={onLoad} className="custom-file-input" />
+                </label>
+            </div>
             <ToolkitProvider
                 keyField="id"
                 data={products}
@@ -75,9 +90,9 @@ const Input = ({ data }) => {
                 {
                     props => (
                         <div>
-                            <ExportCSVButton  {...props.csvProps}>Export</ExportCSVButton>
+                            <MyExportCSV  {...props.csvProps}>Export</MyExportCSV>
                             <hr />
-                            <BootstrapTable striped bordered hover  pagination={paginationFactory()}  {...props.baseProps} />
+                            <BootstrapTable striped bordered hover pagination={paginationFactory()} {...props.baseProps} />
                         </div>
                     )
                 }
