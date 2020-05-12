@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch, connect } from 'react-redux';
-import { lData, onEdit, onCloseModal } from '../../redux/actions';
+import { lData, onEdit, onCloseModal, idToEdit } from '../../redux/actions';
 import ToolkitProvider, { CSVExport, ColumnToggle } from 'react-bootstrap-table2-toolkit';
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory from 'react-bootstrap-table2-paginator';
@@ -8,7 +8,7 @@ import filterFactory, { selectFilter } from 'react-bootstrap-table2-filter';
 import './input-component.css';
 import  ModalWindow  from '../modal-window';
 
-const Input = ({ data, onEditClicked }) => {
+const Input = ({ data, onEditClicked, edit, idEdit }) => {
     const { ToggleList } = ColumnToggle;
     const { ExportCSVButton } = CSVExport;
     const dispatch = useDispatch();
@@ -29,17 +29,24 @@ const Input = ({ data, onEditClicked }) => {
             Amount: dataArr[4]
         });
     });
-
+    
+   const onChangeStatus = () => {
+       console.log(data[idEdit]);
+       const forStatusChange = data[idEdit].split(',');
+       forStatusChange[1] = 'Completed';
+        
+   }
+    
     const rowEvents = {
         onClick: (e, row, rowIndex) => {
-            
-            
+            console.log(rowIndex);
+            dispatch(idToEdit(rowIndex))
+               
         }
-    } ;
+    };
 
-    const onEd = (rowIndex) =>{
-        console.log(rowIndex);
-        dispatch(onEdit())
+    const onEd = () =>{
+        dispatch(onEdit());
     };
 
     // react-table btn element
@@ -112,7 +119,7 @@ const Input = ({ data, onEditClicked }) => {
         
     return (
         <div className="input-container">
-            <ModalWindow onEditClicked={onEditClicked} />
+            <ModalWindow onEditClicked={onEditClicked} onChangeStatus={onChangeStatus} />
             <label>
                 <span className="import-span">Import</span>
                 <input id='file' type="file" onChange={onLoad} className="custom-file-input" />
@@ -145,7 +152,9 @@ const Input = ({ data, onEditClicked }) => {
 const mapStateToProps = (state) => {
     return {
         data: state.data,
-        onEditClicked: state.onEditClicked
+        onEditClicked: state.onEditClicked,
+        edit: state.edit,
+        idEdit: state.idEdit
     };
 };
 

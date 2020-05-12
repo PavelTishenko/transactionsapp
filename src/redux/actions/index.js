@@ -2,7 +2,8 @@ export const LOADED = 'LOADED';
 export const LOAD_DATA = 'LOAD_DATA';
 export const ON_EDIT_CLICK = 'ON_EDIT_CLICK';
 export const CLOSE_MODAL = 'CLOSE_MODAL';
-
+export const EDIT_APPROVED = 'EDIT_APPROVED';
+export const EDIT_ID = 'EDIT_ID';
 export const dataLOADED = (data) => {
     return {
         type: "LOADED",
@@ -27,5 +28,19 @@ export const onCloseModal = () => {
     return {
         type: CLOSE_MODAL,
         payload: false
+    }
+}
+
+export const onEditApproved = () => {
+    return {
+        type: EDIT_APPROVED,
+        payload: true
+    }
+}
+
+export const idToEdit = (id) => {
+    return {
+        type: EDIT_ID,
+        payload: id
     }
 }

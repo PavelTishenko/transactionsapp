@@ -2,7 +2,9 @@
 
 const initState = {
     data: [],
-    onEditClicked: false
+    onEditClicked: false,
+    edit: false,
+    idEdit: null
 }; 
 
 const reducer = (state = initState, action) => {
@@ -21,7 +23,17 @@ const reducer = (state = initState, action) => {
             return{
                 ...state,
                 onEditClicked: action.payload
-            }        
+            }
+        case "EDIT_APPROVED":
+            return {
+                ...state,
+                edit: action.payload
+            }
+        case 'EDIT_ID':
+            return {
+                ...state,
+                idEdit: action.payload
+            }            
         default: 
             return state
     };

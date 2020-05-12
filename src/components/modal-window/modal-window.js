@@ -4,9 +4,9 @@ import Modal from 'react-bootstrap/Modal';
 
 import { useDispatch } from 'react-redux';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { onCloseModal } from '../../redux/actions';
+import { onCloseModal, onEditApproved } from '../../redux/actions';
 
-const ModalWindow = ({onEditClicked}) => {
+const ModalWindow = ({onEditClicked, onChangeStatus}) => {
     const [isOpen, setIsOpen] = useState(false);
     const dispatch = useDispatch();
     const showModal = () => {
@@ -14,7 +14,13 @@ const ModalWindow = ({onEditClicked}) => {
     };
   
     const hideModal = () => {
-      dispatch(onCloseModal())
+      dispatch(onCloseModal());
+    };
+
+    const editApprove = () => {
+        dispatch(onEditApproved());
+        dispatch(onCloseModal());
+        onChangeStatus();
     };
   
     return (
@@ -23,10 +29,10 @@ const ModalWindow = ({onEditClicked}) => {
           <Modal.Header>
             <Modal.Title>Hi</Modal.Title>
           </Modal.Header>
-          <Modal.Body>The body</Modal.Body>
+          <Modal.Body>Do you want to change status of transaction ?</Modal.Body>
           <Modal.Footer>
             <button onClick={hideModal}>Cancel</button>
-            <button>Save</button>
+            <button onClick={editApprove}>Yes</button>
           </Modal.Footer>
         </Modal>
       </>
