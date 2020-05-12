@@ -108,13 +108,11 @@ const Input = ({ data, onEditClicked }) => {
               </div>
             );
           };
-          const hideModalWindow = () =>{
-            dispatch(onCloseModal);
-        };
+         ;
         
     return (
         <div className="input-container">
-            <ModalWindow onEditClicked={onEditClicked} hideModalWindow={hideModalWindow} />
+            <ModalWindow onEditClicked={onEditClicked} />
             <label>
                 <span className="import-span">Import</span>
                 <input id='file' type="file" onChange={onLoad} className="custom-file-input" />
