@@ -18,9 +18,20 @@ function* workerLoadData() {
     
     // make data "great again" as arr 
     const data = dataText.split('\n').slice(1);
-    
+    const products = [];
+    // Create arr with obj to render it in react-table
+    data.forEach(el => {
+        const dataArr = el.split(',');
+        products.push({
+            TransactionId: dataArr[0],
+            Status: dataArr[1],
+            Type: dataArr[2],
+            Clientname: dataArr[3],
+            Amount: dataArr[4]
+        })
+    })   
     // call action and put data to redux state
-    yield put(dataLOADED(data));
+    yield put(dataLOADED(products))
    } catch(e) {
        console.log(e);
    } 

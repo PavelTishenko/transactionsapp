@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, connect } from 'react-redux';
-import { lData, onEdit, onCloseModal, idToEdit } from '../../redux/actions';
+import { lData, onEdit, onCloseModal, idToEdit, changeStatus } from '../../redux/actions';
 import ToolkitProvider, { CSVExport, ColumnToggle } from 'react-bootstrap-table2-toolkit';
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory from 'react-bootstrap-table2-paginator';
@@ -8,7 +8,7 @@ import filterFactory, { selectFilter } from 'react-bootstrap-table2-filter';
 import './input-component.css';
 import  ModalWindow  from '../modal-window';
 
-const Input = ({ data, onEditClicked, edit, idEdit }) => {
+const Input = ({ data, onEditClicked, edit, idEdit, products }) => {
     const { ToggleList } = ColumnToggle;
     const { ExportCSVButton } = CSVExport;
     const dispatch = useDispatch();
@@ -16,36 +16,26 @@ const Input = ({ data, onEditClicked, edit, idEdit }) => {
         // first dispatch when data load
         dispatch(lData());
     };
-    // arr for data
-    const products = [];
-    // Create arr with obj to render it in react-table
-    data.forEach(el => {
-        const dataArr = el.split(',');
-        products.push({
-            TransactionId: dataArr[0],
-            Status: dataArr[1],
-            Type: dataArr[2],
-            Clientname: dataArr[3],
-            Amount: dataArr[4]
-        });
-    });
     
+    useEffect(() => {
+        
+    });
+
    const onChangeStatus = () => {
-       console.log(data[idEdit]);
-       const forStatusChange = data[idEdit].split(',');
-       forStatusChange[1] = 'Completed';
+      console.log(products);
+      dispatch(changeStatus('Completed'));
         
    }
     
     const rowEvents = {
         onClick: (e, row, rowIndex) => {
             console.log(rowIndex);
-            dispatch(idToEdit(rowIndex))
+            dispatch(idToEdit(rowIndex));
                
         }
     };
 
-    const onEd = () =>{
+    const onEd = () => {
         dispatch(onEdit());
     };
 
@@ -114,8 +104,8 @@ const Input = ({ data, onEditClicked, edit, idEdit }) => {
                 <button className="btn-export" onClick={ handleClick }>Export to CSV</button>
               </div>
             );
-          };
-         ;
+        };
+         
         
     return (
         <div className="input-container">
@@ -154,7 +144,8 @@ const mapStateToProps = (state) => {
         data: state.data,
         onEditClicked: state.onEditClicked,
         edit: state.edit,
-        idEdit: state.idEdit
+        idEdit: state.idEdit,
+        products: state.products
     };
 };
 

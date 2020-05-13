@@ -1,7 +1,8 @@
+import { idToEdit } from "../actions";
 
 
 const initState = {
-    data: [],
+    products:[],
     onEditClicked: false,
     edit: false,
     idEdit: null
@@ -12,7 +13,7 @@ const reducer = (state = initState, action) => {
         case "LOADED":
             return {
                 ...state,
-                data: action.payload
+                products: action.payload
             };
         case "ON_EDIT_CLICK":
             return {
@@ -33,7 +34,12 @@ const reducer = (state = initState, action) => {
             return {
                 ...state,
                 idEdit: action.payload
-            }            
+            }
+        case 'STATUS_CHANGED':
+                return{ 
+                    ...state, 
+                    products: [...state.products, state.products[state.idEdit].Status = action.payload]
+                }             
         default: 
             return state
     };
