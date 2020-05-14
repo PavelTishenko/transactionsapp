@@ -16,21 +16,17 @@ const Input = ({ data, onEditClicked, edit, idEdit, products }) => {
         // first dispatch when data load
         dispatch(lData());
     };
-    
-    useEffect(() => {
-        
-    });
 
    const onChangeStatus = () => {
-      console.log(products);
+      console.log(products[idEdit].Clientname);
       dispatch(changeStatus('Completed'));
         
    }
     
     const rowEvents = {
         onClick: (e, row, rowIndex) => {
-            console.log(rowIndex);
-            dispatch(idToEdit(rowIndex));
+            console.log(row.TransactionId);
+            dispatch(idToEdit(row.TransactionId));
                
         }
     };

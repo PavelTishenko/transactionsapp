@@ -38,7 +38,7 @@ const reducer = (state = initState, action) => {
         case 'STATUS_CHANGED':
                 return{ 
                     ...state, 
-                    products: [...state.products, state.products[state.idEdit].Status = action.payload]
+                    products: [...state.products, state.products[state.idEdit - 1].Status = action.payload]
                 }             
         default: 
             return state
