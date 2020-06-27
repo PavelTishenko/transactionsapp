@@ -8,6 +8,8 @@ import filterFactory, { selectFilter } from 'react-bootstrap-table2-filter';
 import './input-component.css';
 import ModalWindow from '../modal-window';
 import Button from 'react-bootstrap/Button'
+import { Container, Row, Col } from 'react-bootstrap'
+
 const Input = ({ data, onEditClicked, edit, idEdit, products }) => {
     const dispatch = useDispatch();
     const onLoad = (data, fileInfo) => {
@@ -89,6 +91,7 @@ const Input = ({ data, onEditClicked, edit, idEdit, products }) => {
             formatter: rankFormatter
         }];
 
+    // Export BTN        
     const MyExportCSV = (props) => {
         const handleClick = () => {
             props.onExport();
@@ -99,7 +102,7 @@ const Input = ({ data, onEditClicked, edit, idEdit, products }) => {
             </div>
         );
     };
-
+    // Import BTN
     const MyImportCSV = () => {
         return (
             <div>
@@ -114,9 +117,9 @@ const Input = ({ data, onEditClicked, edit, idEdit, products }) => {
 
 
     return (
-        <div className="input-container">
+        <Container className="input-container">
             <ModalWindow onEditClicked={onEditClicked} onChangeStatus={onChangeStatus} />
-        
+
             <ToolkitProvider
                 keyField="id"
                 data={products}
@@ -141,7 +144,7 @@ const Input = ({ data, onEditClicked, edit, idEdit, products }) => {
                     )
                 }
             </ToolkitProvider>
-        </div >
+        </Container >
     );
 };
 
