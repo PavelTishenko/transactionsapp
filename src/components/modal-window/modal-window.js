@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import Button from 'react-bootstrap/Button';
+import React from 'react';
 import Modal from 'react-bootstrap/Modal';
 
 import { useDispatch } from 'react-redux';
@@ -7,12 +6,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { onCloseModal, onEditApproved } from '../../redux/actions';
 
 const ModalWindow = ({onEditClicked, onChangeStatus}) => {
-    const [isOpen, setIsOpen] = useState(false);
     const dispatch = useDispatch();
-    const showModal = () => {
-      return onEditClicked;
-    };
-  
+    
     const hideModal = () => {
       dispatch(onCloseModal());
     };

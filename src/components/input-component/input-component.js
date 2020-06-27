@@ -1,33 +1,31 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useDispatch, connect } from 'react-redux';
-import { lData, onEdit, onCloseModal, idToEdit, changeStatus } from '../../redux/actions';
-import ToolkitProvider, { CSVExport, ColumnToggle } from 'react-bootstrap-table2-toolkit';
+import { lData, onEdit, idToEdit, changeStatus } from '../../redux/actions';
+import ToolkitProvider from 'react-bootstrap-table2-toolkit';
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory from 'react-bootstrap-table2-paginator';
 import filterFactory, { selectFilter } from 'react-bootstrap-table2-filter';
 import './input-component.css';
-import  ModalWindow  from '../modal-window';
-
+import ModalWindow from '../modal-window';
+import Button from 'react-bootstrap/Button'
 const Input = ({ data, onEditClicked, edit, idEdit, products }) => {
-    const { ToggleList } = ColumnToggle;
-    const { ExportCSVButton } = CSVExport;
     const dispatch = useDispatch();
     const onLoad = (data, fileInfo) => {
         // first dispatch when data load
         dispatch(lData());
     };
 
-   const onChangeStatus = () => {
-      console.log(products[idEdit].Clientname);
-      dispatch(changeStatus('Completed'));
-        
-   }
-    
+    const onChangeStatus = () => {
+        console.log(products[idEdit].Clientname);
+        dispatch(changeStatus('Completed'));
+
+    }
+
     const rowEvents = {
         onClick: (e, row, rowIndex) => {
             console.log(row.TransactionId);
             dispatch(idToEdit(row.TransactionId));
-               
+
         }
     };
 
@@ -37,7 +35,7 @@ const Input = ({ data, onEditClicked, edit, idEdit, products }) => {
 
     // react-table btn element
     const rankFormatter = () => {
-        return(
+        return (
             <div>
                 <button className="btn btn-primary" onClick={onEd}>Edit</button>
                 <button className="btn btn-danger">Delete</button>
@@ -75,7 +73,7 @@ const Input = ({ data, onEditClicked, edit, idEdit, products }) => {
             filter: selectFilter({
                 options: selectOpt,
                 className: 'filterType-classname'
-              })
+            })
         },
         {
             dataField: 'Clientname',
@@ -91,42 +89,54 @@ const Input = ({ data, onEditClicked, edit, idEdit, products }) => {
             formatter: rankFormatter
         }];
 
-        const MyExportCSV = (props) => {
-            const handleClick = () => {
-              props.onExport();
-            };
-            return (
-              <div>
-                <button className="btn-export" onClick={ handleClick }>Export to CSV</button>
-              </div>
-            );
+    const MyExportCSV = (props) => {
+        const handleClick = () => {
+            props.onExport();
         };
-         
-        
+        return (
+            <div>
+                <Button className="btn-export" onClick={handleClick}>Export to CSV</Button>
+            </div>
+        );
+    };
+
+    const MyImportCSV = () => {
+        return (
+            <div>
+                <input type="file" id="BtnBrowseHidden" name="files" onChange={onLoad} />
+                <Button className="btn-export" onClick={loadFile}>Import</Button>
+            </div>
+        )
+    };
+    const loadFile = () => {
+        document.getElementById('BtnBrowseHidden').click();
+    };
+
+
     return (
         <div className="input-container">
             <ModalWindow onEditClicked={onEditClicked} onChangeStatus={onChangeStatus} />
-            <label>
-                <span className="import-span">Import</span>
-                <input id='file' type="file" onChange={onLoad} className="custom-file-input" />
-            </label>
+        
             <ToolkitProvider
                 keyField="id"
                 data={products}
                 columns={columns}
-                rowEvents={ rowEvents }
+                rowEvents={rowEvents}
                 exportCSV
             >
                 {
                     props => (
-                        <div>
-                            <MyExportCSV  {...props.csvProps}>Export</MyExportCSV>
+                        <div className="table-holder">
+                            <div className="btn-holder">
+                                <MyImportCSV></MyImportCSV>
+                                <MyExportCSV  {...props.csvProps}>Export</MyExportCSV>
+                            </div>
                             <hr />
-                            <BootstrapTable striped bordered hover 
-                                pagination={paginationFactory()} 
-                                filter={ filterFactory() } 
-                                {...props.baseProps} 
-                                rowEvents={ rowEvents }/>
+                            <BootstrapTable striped bordered hover
+                                pagination={paginationFactory()}
+                                filter={filterFactory()}
+                                {...props.baseProps}
+                                rowEvents={rowEvents} />
                         </div>
                     )
                 }
