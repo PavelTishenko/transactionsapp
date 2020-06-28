@@ -15,7 +15,7 @@ const Table = ({ data }) => {
             <tr key={id}>
                 <td>{id}</td>
                 <td>{status}</td>
-                <td>{type}</td>
+                <td key={type}>{type}</td>
                 <td>{clientName}</td>
                 <td>{amount}</td>
                 <td>

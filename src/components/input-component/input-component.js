@@ -4,7 +4,7 @@ import { lData, onEdit, idToEdit, changeStatus } from '../../redux/actions';
 import ToolkitProvider from 'react-bootstrap-table2-toolkit';
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory from 'react-bootstrap-table2-paginator';
-import filterFactory, { selectFilter } from 'react-bootstrap-table2-filter';
+import filterFactory, { selectFilter, textFilter } from 'react-bootstrap-table2-filter';
 import './input-component.css';
 import ModalWindow from '../modal-window';
 import Button from 'react-bootstrap/Button'
@@ -46,36 +46,46 @@ const Input = ({ data, onEditClicked, edit, idEdit, products }) => {
     };
     // select options for Status column
     const selectOptions = {
-        0: 'good',
-        1: 'Bad',
-        2: 'unknown'
+        'Completed' : 'Completed',
+        'Cancelled' : 'Cancelled',
+        'Pending' : 'Pending'
     };
     // select options for type column
     const selectOpt = {
-        0: 'Withdrawal',
-        1: 'Refill'
+        'Withdrawal': 'Withdrawal',
+        'Refill': 'Refill'
     };
 
     const columns = [
         {
             dataField: 'TransactionId',
-            text: 'id'
+            text: 'id',
+            sort: true,
+            headerAlign: 'center'
         },
         {
             dataField: 'Status',
             text: 'Status',
-            // filter: selectFilter({
-            //     options: selectOptions,
-            //     className: 'filter-classname'
-            //   })
+            
+            filter:  selectFilter({ 
+                options:selectOptions,
+                style: {
+                    width:'15px' 
+                } 
+            }),
+            className: 'txt-filter'
         },
         {
             dataField: 'Type',
             text: 'Type',
-            filter: selectFilter({
+            sort: true,
+            
+            filter:  selectFilter({ 
                 options: selectOpt,
-                className: 'filterType-classname'
-            })
+                style: {
+                    width:'15px'
+                }  
+            }),
         },
         {
             dataField: 'Clientname',
@@ -121,7 +131,7 @@ const Input = ({ data, onEditClicked, edit, idEdit, products }) => {
             <ModalWindow onEditClicked={onEditClicked} onChangeStatus={onChangeStatus} />
 
             <ToolkitProvider
-                keyField="id"
+                keyField='id'
                 data={products}
                 columns={columns}
                 rowEvents={rowEvents}
@@ -135,11 +145,12 @@ const Input = ({ data, onEditClicked, edit, idEdit, products }) => {
                                 <MyExportCSV  {...props.csvProps}>Export</MyExportCSV>
                             </div>
                             <hr />
-                            <BootstrapTable striped bordered hover
+                            <BootstrapTable striped bordered hover variant="dark"
                                 pagination={paginationFactory()}
                                 filter={filterFactory()}
                                 {...props.baseProps}
-                                rowEvents={rowEvents} />
+                                rowEvents={rowEvents}
+                                keyField='id' />
                         </div>
                     )
                 }
