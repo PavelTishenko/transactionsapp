@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch, connect } from 'react-redux';
-import { lData, onEdit, idToEdit, changeStatus } from '../../redux/actions';
+import { lData, onEdit, idToEdit, changeStatus, deleteElement } from '../../redux/actions';
 import ToolkitProvider from 'react-bootstrap-table2-toolkit';
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory from 'react-bootstrap-table2-paginator';
@@ -18,29 +18,35 @@ const Input = ({ data, onEditClicked, edit, idEdit, products }) => {
     };
 
     const onChangeStatus = () => {
-        console.log(products[idEdit].Clientname);
         dispatch(changeStatus('Completed'));
-
     }
+
+    const onEd = () => {
+        console.log(idEdit);
+        dispatch(onEdit());
+        
+        
+    };
+
+    const onDelete = () => {
+        dispatch(deleteElement(idEdit))
+    };
 
     const rowEvents = {
         onClick: (e, row, rowIndex) => {
-            console.log(row.TransactionId);
-            dispatch(idToEdit(row.TransactionId));
+            console.log(rowIndex);
+            dispatch(idToEdit(rowIndex));
 
         }
     };
 
-    const onEd = () => {
-        dispatch(onEdit());
-    };
 
     // react-table btn element
     const rankFormatter = () => {
         return (
             <div>
                 <button className="btn btn-primary" onClick={onEd}>Edit</button>
-                <button className="btn btn-danger">Delete</button>
+                <button className="btn btn-danger" onClick={onDelete}>Delete</button>
             </div>
         )
     };
@@ -108,7 +114,7 @@ const Input = ({ data, onEditClicked, edit, idEdit, products }) => {
         };
         return (
             <div>
-                <Button className="btn-export" onClick={handleClick}>Export to CSV</Button>
+                <Button variant="outline-success" className="btn-export" onClick={handleClick}>Export to CSV</Button>
             </div>
         );
     };
@@ -117,7 +123,7 @@ const Input = ({ data, onEditClicked, edit, idEdit, products }) => {
         return (
             <div>
                 <input type="file" id="BtnBrowseHidden" name="files" onChange={onLoad} />
-                <Button className="btn-export" onClick={loadFile}>Import</Button>
+                <Button variant="outline-primary" className="btn-export" onClick={loadFile}>Import</Button>
             </div>
         )
     };

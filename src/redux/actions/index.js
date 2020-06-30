@@ -5,6 +5,7 @@ export const CLOSE_MODAL = 'CLOSE_MODAL';
 export const EDIT_APPROVED = 'EDIT_APPROVED';
 export const EDIT_ID = 'EDIT_ID';
 export const STATUS_CHANGED = 'STATUS_CHANGED';
+export const DELETE = 'ELEMENT_DELETED';
 
 export const dataLOADED = (data) => {
     return {
@@ -55,3 +56,10 @@ export const changeStatus = (status) => {
 
     };
 };
+
+export const deleteElement = (id) => {
+    return {
+        type: DELETE,
+        payload: id
+    }
+}

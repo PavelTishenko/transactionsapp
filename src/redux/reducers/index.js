@@ -36,10 +36,16 @@ const reducer = (state = initState, action) => {
                 idEdit: action.payload
             }
         case 'STATUS_CHANGED':
-                return{ 
+            return{ 
+                ...state, 
+                products: [...state.products, state.products[state.idEdit].Status = action.payload]
+            }
+        case 'ELEMENT_DELETED':
+            let newProducts = state.products.slice(state.idEdit + 1, state.products.length);
+            return{ 
                     ...state, 
-                    products: [...state.products, state.products[state.idEdit - 1].Status = action.payload]
-                }             
+                    products: newProducts
+                }                   
         default: 
             return state
     };

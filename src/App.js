@@ -4,14 +4,20 @@ import './App.css';
 
 import * as ReactBootstrap from 'react-bootstrap';
 import Input from './components/input-component';
-import Select from './components/select-component';
-
+import NewTransaction from './components/newTransaction-component';
 const App = () => {
+  const { Container, Row, Col } = ReactBootstrap;
   return (
-    <div className="App">
-      <Select/>
-      <Input/>
-    </div>
+    <Container className="App">
+      <Row>
+        <Col sm={4}>
+          <NewTransaction/>
+        </Col>
+        <Col md={8}>
+          <Input  />
+        </Col>
+      </Row>
+    </Container>
   );
 };
 
